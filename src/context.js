@@ -11,6 +11,7 @@ const defaultState = {
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, defaultState);
   const [menuItems, setMenuItems] = useState(state.menu);
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setMenuItems(state.menu.flat())
@@ -33,6 +34,7 @@ const AppProvider = ({ children }) => {
         .then((res) => res.json())
         .then(
           (result) => {
+            setLoading(false)
             result = result.slice(0, 7);
             result.map(item => item.category = 'burgers');
             dispatch({ type: 'BURGERS', payload: result });
@@ -96,7 +98,7 @@ const AppProvider = ({ children }) => {
 
   return (
     <AppContext.Provider
-      value={{ ...state, menuItems, setMenuItems, filterMenu }}>{children}</AppContext.Provider>
+      value={{ ...state, menuItems, setMenuItems, filterMenu, loading }}>{children}</AppContext.Provider>
   );
 }
 

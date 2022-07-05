@@ -2,10 +2,13 @@ import React from 'react'
 import { useGlobalContext } from '../context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar } from '@fortawesome/free-solid-svg-icons'
+import loadingAnimation from '../assets/loading-arrow.gif'
 
 const List = () => {
-  const { menuItems } = useGlobalContext();
+  const { menuItems, loading } = useGlobalContext();
+  console.log(loading)
   const rating = <FontAwesomeIcon icon={faStar} />
+  if (loading) return <img src={loadingAnimation} alt="loading animation" />;
   return (
     <section className='menuContainer'>
       {menuItems.map(item => {
